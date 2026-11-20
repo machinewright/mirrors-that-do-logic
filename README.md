@@ -1,12 +1,19 @@
-# mirror-sat (working title)
+# Mirrors that do logic
 
-Second interactive essay in the mirror-puzzle series (after ../proving-par): **why no fast solver is expected**.
-The reader builds logic out of mirrors (wire, fan-out with splitters, crossings, OR at a target), then watches any
-3-SAT formula compile into a board that can be lit exactly when the formula is satisfiable. So a fast general
-solver for the puzzle would be a fast SAT solver (NP-hardness by reduction, taught on a puzzle you play).
+Interactive essay, sequel to ../proving-par ("How do you know 7 is the best?"): why no program is expected to solve
+every mirror puzzle fast. The reader builds logic out of mirrors (switch, fan-out with splitters, free crossings, OR at
+a target), compiles any 3-CNF formula into a playable board, tries to cheat by unbolting the plumbing, and sees ghost
+light (essay 1's pruning) slow but not stop the exponential growth on hard formulas.
 
-Status: feasibility prototype.
-- `proto/compile.mjs`: CNF -> board. Only the n variable mirrors matter; every other piece may be flipped, but
-  flipping one can only remove light (it sends a beam into a wall or off the board).
-- `proto/verify.mjs [seed]`: brute force over all piece orientations on random small CNFs: solvable iff SAT.
-  2026-11-20: 2,551 formulas (361 unsatisfiable), no mismatch.
+Status: full draft, not published. Plain HTML/JS modules, no build step. `python3 -m http.server 8773`, open /.
+
+- `src/compile.js`: CNF -> board (n variables, m clauses -> (4m+2) x (3n+1)). Flipping any non-switch piece only sends
+  light off the board or into a wall, so the board can be fully lit iff the formula is satisfiable.
+- `proto/verify.mjs [seed]`: brute force over every orientation of every piece on random small CNFs (2,609 formulas,
+  973 unsatisfiable, no mismatch).
+- `proto/scaling-unsat.mjs`: search positions of the essay-1 solver on unsatisfiable random 3-CNFs at 4.26 clauses
+  per variable; writes `src/scaling-data.js` for the chart.
+- Widgets: `gadget` (ASCII-map boards, `src/maps.js`), `compiler` (data-formula, data-presets, data-solver, data-unbolt,
+  data-ghost, data-locked), `scaling` (log chart + table).
+- `scripts/og.py` renders og.png; `scripts/publish.sh` publishes to GitHub Pages (only after the owner has read it).
+- Engine, ghost tracer, solver and renderer come from proving-par (renderer extended with splitters, bolted pieces, labels).
