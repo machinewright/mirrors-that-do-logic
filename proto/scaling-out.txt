@@ -8,3 +8,4 @@ n=18 m=77 board 310x55: unsat 8 median nodes 4367 | sat 17 median 3297 | over bu
 n=20 m=85 board 342x61: unsat 13 median nodes 5467 | sat 12 median 3041 | over budget 0 | 22.1s
 n=22 m=94 board 378x67: unsat 5 median nodes 18203 | sat 20 median 10451 | over budget 0 | 65.3s
 n=24 m=102 board 410x73: unsat 9 median nodes 18175 | sat 16 median 13889 | over budget 0 | 114.4s
+n=26 m=111 board 446x79: unsat 10 median nodes 54187 | sat 15 median 45283 | over budget 0 | 472.1s

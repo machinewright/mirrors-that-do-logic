@@ -4,7 +4,7 @@
 import { SCALING } from '../src/scaling-data.js';
 const NS = 'http://www.w3.org/2000/svg';
 export function mount(el) {
-  const W = 620, H = 300, L = 64, R = 132, T = 16, B = 44;
+  const W = 620, H = 300, L = 48, R = 132, T = 16, B = 44;
   const ns = SCALING.rows.map((r) => r.n), n0 = Math.min(...ns), n1 = Math.max(...ns);
   const yMax = Math.ceil(Math.log10(2 ** n1)), x = (n) => L + (n - n0) / (n1 - n0) * (W - L - R);
   const y = (v) => T + (1 - Math.log10(v) / yMax) * (H - T - B);
@@ -14,7 +14,7 @@ export function mount(el) {
   const add = (tag, attrs, text) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; svg.append(e); return e; };
   for (let p = 0; p <= yMax; p++) {
     add('line', { x1: L, x2: W - R, y1: y(10 ** p), y2: y(10 ** p), class: 'grid' });
-    add('text', { x: L - 8, y: y(10 ** p) + 4, class: 'tick', 'text-anchor': 'end' }, (10 ** p).toLocaleString('en-US'));
+    add('text', { x: L - 8, y: y(10 ** p) + 4, class: 'tick', 'text-anchor': 'end' }, p >= 6 ? `${10 ** (p - 6)}M` : p >= 3 ? `${10 ** (p - 3)}k` : String(10 ** p));
   }
   for (const n of ns) add('text', { x: x(n), y: H - B + 18, class: 'tick', 'text-anchor': 'middle' }, n);
   add('text', { x: (L + W - R) / 2, y: H - 6, class: 'axis', 'text-anchor': 'middle' }, 'variables in the formula');
