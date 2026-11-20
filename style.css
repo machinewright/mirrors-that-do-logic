@@ -81,3 +81,4 @@ noscript p { background: #fff1d6; padding: 10px; }
 .chip { display: inline-block; font: 500 14px/1.4 ui-monospace, "SF Mono", Menlo, monospace; padding: 2px 9px; border-radius: 99px;
   background: #fff; border: 1px solid #d3cab6; color: var(--muted); }
 .chip.on { background: #dff5e7; border-color: #7fc79c; color: #17603a; }
+.widget canvas.board.small { max-width: 260px; }

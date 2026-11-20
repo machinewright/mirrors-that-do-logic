@@ -1,0 +1,8 @@
+n=6 m=26 board 106x19: unsat 3 median nodes 61 | sat 22 median 32 | over budget 0 | 0.0s
+n=8 m=34 board 138x25: unsat 10 median nodes 123 | sat 15 median 61 | over budget 0 | 0.1s
+n=10 m=43 board 174x31: unsat 3 median nodes 229 | sat 22 median 172 | over budget 0 | 0.2s
+n=12 m=51 board 206x37: unsat 7 median nodes 423 | sat 18 median 242 | over budget 0 | 0.5s
+n=14 m=60 board 242x43: unsat 5 median nodes 1263 | sat 20 median 554 | over budget 0 | 1.5s
+n=16 m=68 board 274x49: unsat 5 median nodes 1507 | sat 20 median 1119 | over budget 0 | 3.5s
+n=18 m=77 board 310x55: unsat 8 median nodes 4367 | sat 17 median 3297 | over budget 0 | 12.8s
+n=20 m=85 board 342x61: unsat 13 median nodes 5467 | sat 12 median 3041 | over budget 0 | 22.1s

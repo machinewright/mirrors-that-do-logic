@@ -66,7 +66,7 @@ function makeTracer(g) {
   return { run, isLit: (i) => lit[i] === stamp, rot0, n };
 }
 
-// Returns { moves, flips: [idx...] } for an optimal solution, or null if none within `limit`
+// Returns { moves, flips: [idx...], nodes } for an optimal solution, or { moves: null } if none within `limit`
 // moves or the node budget runs out (then `exhausted` is set).
 export function solve(g, { limit = Infinity, maxNodes = 300000, ghost = true } = {}) {
   const goal = targets(g);
@@ -108,5 +108,5 @@ export function solve(g, { limit = Infinity, maxNodes = 300000, ghost = true } =
   }
   dfs(0);
   if (best) return { ...best, exhausted, nodes };
-  return exhausted ? { moves: null, exhausted, nodes } : null;
+  return { moves: null, exhausted, nodes }; // moves null: no solution (or budget ran out, if exhausted)
 }

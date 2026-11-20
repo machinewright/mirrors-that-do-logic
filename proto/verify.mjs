@@ -2,7 +2,10 @@
 import { compile } from '../src/compile.js';
 import { trace, targets } from '../src/engine.js';
 let seed = +(process.argv[2] || 1);
-const rnd = (k) => { seed = (seed * 1103515245 + 12345) >>> 0; return (seed >>> 8) % k; };
+const rnd = (k) => { // mulberry32
+  seed = (seed + 0x6D2B79F5) >>> 0; let t = seed; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+  return (((t ^ (t >>> 14)) >>> 0) / 4294967296 * k) | 0;
+};
 const sat = (n, cls) => { for (let a = 0; a < 1 << n; a++) if (cls.every((c) => c.some((l) => ((a >> (Math.abs(l) - 1)) & 1) === (l > 0 ? 1 : 0)))) return true; return false; };
 let cases = 0, sats = 0;
 for (let t = 0; t < 3000; t++) {
