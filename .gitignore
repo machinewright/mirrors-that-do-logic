@@ -1,0 +1,3 @@
+proto/*.log
+proto/*-out.txt
+REVIEW-*.md
