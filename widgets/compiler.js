@@ -38,7 +38,8 @@ export function mount(el, opts = {}) {
     ({ g, vars } = compile(f.names.length, f.clauses, { fixed: opts.unbolt !== '1' }));
     goal = targets(g); state = startState(g);
     if (ghostMode) vars.forEach((c) => { state[c] = UNDECIDED; });
-    view = makeCanvas(g, { label: `Board for the formula ${input.value}. Arrow keys move between the switch mirrors; Enter flips one.`, onActivate });
+    view = makeCanvas(g, { label: `Board for the formula ${input.value}. Arrow keys move between the switch mirrors; Enter flips one.`, onActivate,
+      describe: (i) => (vars.includes(i) ? `Switch ${f.names[vars.indexOf(i)]}: ${valText(vars.indexOf(i))}` : `Mirror at column ${i % g.w + 1}, row ${Math.floor(i / g.w) + 1}`) });
     view.canvas.classList.add('wide-board'); view.canvas.style.maxWidth = `${g.w * 46}px`;
     holder.replaceChildren(view.canvas);
     switches.replaceChildren(...vars.map((c) => { const b = button('', () => onActivate(c)); b.className = 'switch'; return b; }));

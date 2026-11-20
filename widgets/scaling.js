@@ -24,7 +24,7 @@ export function mount(el) {
   const rows = SCALING.rows;
   add('path', { d: path(rows.map((r) => [x(r.n), y(r.unsat)])), class: 'series' });
   add('text', { x: W - R + 8, y: y(rows.at(-1).unsat) + 4, class: 'label strong' }, 'ghost light');
-  const tip = document.createElement('div'); tip.className = 'tip'; tip.hidden = true;
+  const tip = document.createElement('div'); tip.className = 'tip'; tip.hidden = true; tip.setAttribute('aria-hidden', 'true');
   rows.forEach((r) => {
     const show = () => {
       tip.hidden = false;
@@ -33,7 +33,8 @@ export function mount(el) {
       tip.style.left = `${Math.min(x(r.n) * s, bb.width - 230)}px`; tip.style.top = `${y(r.unsat) * s + 12}px`;
     };
     add('circle', { cx: x(r.n), cy: y(r.unsat), r: 4.5, class: 'dot' });
-    const hit = add('circle', { cx: x(r.n), cy: y(r.unsat), r: 14, class: 'hit', tabindex: 0 });
+    const hit = add('circle', { cx: x(r.n), cy: y(r.unsat), r: 14, class: 'hit', tabindex: 0, role: 'img',
+      'aria-label': `${r.n} variables, ${r.m} clauses: ${r.unsat.toLocaleString('en-US')} positions (median of ${r.k}); 2 to the ${r.n} is ${(2 ** r.n).toLocaleString('en-US')}` });
     hit.addEventListener('mouseenter', show); hit.addEventListener('focus', show);
     hit.addEventListener('mouseleave', () => { tip.hidden = true; }); hit.addEventListener('blur', () => { tip.hidden = true; });
   });
