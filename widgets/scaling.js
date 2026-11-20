@@ -4,7 +4,7 @@
 import { SCALING } from '../src/scaling-data.js';
 const NS = 'http://www.w3.org/2000/svg';
 export function mount(el) {
-  const W = 620, H = 300, L = 48, R = 132, T = 16, B = 44;
+  const W = 620, H = 300, L = 56, R = 110, T = 16, B = 44;
   const ns = SCALING.rows.map((r) => r.n), n0 = Math.min(...ns), n1 = Math.max(...ns);
   const yMax = Math.ceil(Math.log10(2 ** n1)), x = (n) => L + (n - n0) / (n1 - n0) * (W - L - R);
   const y = (v) => T + (1 - Math.log10(v) / yMax) * (H - T - B);
@@ -20,10 +20,10 @@ export function mount(el) {
   add('text', { x: (L + W - R) / 2, y: H - 6, class: 'axis', 'text-anchor': 'middle' }, 'variables in the formula');
   const path = (pts) => pts.map(([a, b], i) => `${i ? 'L' : 'M'}${a.toFixed(1)},${b.toFixed(1)}`).join('');
   add('path', { d: path(ns.map((n) => [x(n), y(2 ** n)])), class: 'ref' });
-  add('text', { x: W - R + 8, y: y(2 ** n1) + 4, class: 'label' }, 'every setting (2ⁿ)');
+  add('text', { x: W - R + 8, y: y(2 ** n1) + 4, class: 'label' }, '2ⁿ');
   const rows = SCALING.rows;
   add('path', { d: path(rows.map((r) => [x(r.n), y(r.unsat)])), class: 'series' });
-  add('text', { x: W - R + 8, y: y(rows.at(-1).unsat) + 4, class: 'label strong' }, 'with ghost light');
+  add('text', { x: W - R + 8, y: y(rows.at(-1).unsat) + 4, class: 'label strong' }, 'ghost light');
   const tip = document.createElement('div'); tip.className = 'tip'; tip.hidden = true;
   rows.forEach((r) => {
     const show = () => {
@@ -42,6 +42,6 @@ export function mount(el) {
   table.innerHTML = `<summary>Table</summary><table class="data"><thead><tr><th>variables</th><th>clauses</th><th>median positions</th><th>2<sup>n</sup></th><th>formulas</th></tr></thead><tbody>${
     rows.map((r) => `<tr><td>${r.n}</td><td>${r.m}</td><td>${r.unsat.toLocaleString('en-US')}</td><td>${(2 ** r.n).toLocaleString('en-US')}</td><td>${r.k}</td></tr>`).join('')}</tbody></table>`;
   const cap = document.createElement('p'); cap.className = 'note';
-  cap.textContent = SCALING.caption;
+  cap.textContent = `${SCALING.caption} Dashed line: 2ⁿ, the number of ways to set the switches.`;
   el.append(wrap, cap, table);
 }

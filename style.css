@@ -101,3 +101,4 @@ table.data th, table.data td { padding: 3px 10px; text-align: right; border-bott
 .widget .switches button { font-family: ui-monospace, "SF Mono", Menlo, monospace; min-width: 6.5em; }
 .widget .switches button[data-v="true"] { background: #fff6dd; border-color: #e2b85a; }
 .widget .switches button[data-v="undecided"] { border-style: dashed; }
+@media (max-width: 600px) { svg.chart .tick { font-size: 19px; } svg.chart .axis, svg.chart .label { font-size: 20px; } }
