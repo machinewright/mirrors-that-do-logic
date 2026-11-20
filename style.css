@@ -82,3 +82,19 @@ noscript p { background: #fff1d6; padding: 10px; }
   background: #fff; border: 1px solid #d3cab6; color: var(--muted); }
 .chip.on { background: #dff5e7; border-color: #7fc79c; color: #17603a; }
 .widget canvas.board.small { max-width: 260px; }
+.chart-wrap { position: relative; }
+svg.chart { width: 100%; height: auto; display: block; font-family: var(--sans); }
+svg.chart .grid { stroke: #e2dbcb; stroke-width: 1; }
+svg.chart .tick { fill: var(--muted); font-size: 12px; }
+svg.chart .axis { fill: var(--muted); font-size: 12.5px; }
+svg.chart .ref { fill: none; stroke: #8b93a1; stroke-width: 2; stroke-dasharray: 5 4; }
+svg.chart .series { fill: none; stroke: var(--accent); stroke-width: 2; }
+svg.chart .dot { fill: var(--accent); stroke: var(--panel); stroke-width: 2; }
+svg.chart .hit { fill: transparent; cursor: default; }
+svg.chart .hit:focus-visible { outline: none; stroke: #4a90d9; stroke-width: 2; }
+svg.chart .label { fill: var(--muted); font-size: 12.5px; } svg.chart .label.strong { fill: var(--ink); font-weight: 600; }
+.chart-wrap .tip { position: absolute; background: #fff; border: 1px solid var(--panel-edge); border-radius: 8px; padding: 6px 10px;
+  font-size: 13px; line-height: 1.45; box-shadow: 0 4px 14px -6px rgba(20,24,33,.35); pointer-events: none; width: 220px; }
+table.data { border-collapse: collapse; font-size: 13.5px; margin-top: 8px; font-variant-numeric: tabular-nums; }
+table.data th, table.data td { padding: 3px 10px; text-align: right; border-bottom: 1px solid var(--rule); }
+.chip.dead { background: #fde4e1; border-color: #e3a29a; color: #9c2a20; text-decoration: line-through; }
