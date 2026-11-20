@@ -15,5 +15,5 @@ Status: full draft, not published. Plain HTML/JS modules, no build step. `python
   per variable; writes `src/scaling-data.js` for the chart.
 - Widgets: `gadget` (ASCII-map boards, `src/maps.js`), `compiler` (data-formula, data-presets, data-solver, data-unbolt,
   data-ghost, data-locked), `scaling` (log chart + table).
-- `scripts/og.py` renders og.png; `scripts/publish.sh` publishes to GitHub Pages (only after the owner has read it).
+- `scripts/og.py` renders og.png; `scripts/publish.sh` publishes to GitHub Pages (not run yet).
 - Engine, ghost tracer, solver and renderer come from proving-par (renderer extended with splitters, bolted pieces, labels).
