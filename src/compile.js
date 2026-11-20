@@ -1,7 +1,7 @@
 // Compile a CNF formula into a mirror board: lit-all-targets <=> formula satisfiable.
 // Literals: +v / -v (1-based). Layout: variable i owns rows 3i (TRUE bus), 3i+1 (emitter row), 3i+2 (FALSE bus).
 // Clause j owns columns base..base+2 (one per literal) plus a wall column after it; targets in the bottom row.
-import { makeGrid, EMITTER, MIRROR, SPLITTER, TARGET, WALL } from '../src/engine.js';
+import { makeGrid, EMITTER, MIRROR, SPLITTER, TARGET, WALL } from './engine.js';
 export function compile(n, clauses, { fixed = false } = {}) {
   const m = clauses.length, w = 2 + 4 * m, h = 3 * n + 1, Y = h - 1;
   const g = makeGrid(w, h);

@@ -1,5 +1,5 @@
 // Brute force: for random small CNFs, the board (every mirror/splitter flippable) is solvable iff the formula is SAT.
-import { compile } from './compile.mjs';
+import { compile } from '../src/compile.js';
 import { trace, targets } from '../src/engine.js';
 let seed = +(process.argv[2] || 1);
 const rnd = (k) => { seed = (seed * 1103515245 + 12345) >>> 0; return (seed >>> 8) % k; };

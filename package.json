@@ -1,1 +1,1 @@
-{"type":"module"}
+{ "name": "mirror-sat", "private": true, "type": "module", "scripts": { "test": "node --test test/" } }
