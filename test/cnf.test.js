@@ -29,3 +29,11 @@ test('satisfiable() finds a model or null', () => {
   assert.ok(satisfiable(2, [[1, 2], [-1]]));
   assert.equal(satisfiable(2, [[1, 2], [1, -2], [-1, 2], [-1, -2]]), null);
 });
+
+test('parser: not(x), empty clauses, negated groups', () => {
+  assert.deepEqual(parseCNF('not(x) | y').clauses, [[-1, 2]]);
+  assert.deepEqual(parseCNF('!(x) & ~ y').clauses, [[-1], [-2]]);
+  assert.deepEqual(parseCNF('x | nothing').names, ['x', 'nothing']);
+  assert.throws(() => parseCNF('not(x | y)'), /one variable at a time/);
+  assert.throws(() => parseCNF('x & |'), /no variables/);
+});

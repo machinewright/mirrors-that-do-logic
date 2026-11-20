@@ -3,9 +3,11 @@
 // Returns { names: ['x','y',...], clauses: [[+1,-2], ...] } (1-based signed indices) or throws Error with a message.
 export function parseCNF(text, { maxVars = 8, maxClauses = 10 } = {}) {
   const names = [], idx = new Map(), clauses = [];
-  const src = text.replace(/∧/g, '&').replace(/∨/g, '|').replace(/\band\b/gi, '&').replace(/\bor\b/gi, '|').replace(/\bnot\s+/gi, '!');
+  const src = text.replace(/∧/g, '&').replace(/∨/g, '|').replace(/\band\b/gi, '&').replace(/\bor\b/gi, '|').replace(/\bnot\b\s*/gi, '!')
+    .replace(/([!~¬-])\s*\(\s*([A-Za-z][A-Za-z0-9_]*)\s*\)/g, '$1$2'); // !(x) -> !x
+  if (/[!~¬-]\s*\(/.test(src)) throw new Error('Negate one variable at a time, like  !x | !y.');
   for (const part of src.split(/[&,;\n]/)) {
-    const body = part.replace(/[()]/g, ' ').trim();
+    const body = part.replace(/[()]/g, ' ').replace(/([!~¬-])\s+/g, '$1').trim();
     if (!body) continue;
     const lits = [];
     for (const tok of body.split(/[|\s]+/).filter(Boolean)) {
@@ -16,6 +18,7 @@ export function parseCNF(text, { maxVars = 8, maxClauses = 10 } = {}) {
       const lit = m[1].length % 2 ? -k : k;
       if (!lits.includes(lit)) lits.push(lit);
     }
+    if (!lits.length) throw new Error(`"${body}" has no variables in it.`);
     if (lits.length > 3) throw new Error(`Each clause can have at most three literals ("${body}" has ${lits.length}).`);
     clauses.push(lits);
   }

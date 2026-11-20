@@ -56,14 +56,15 @@ export function mount(el, opts = {}) {
   }
   function redraw() {
     const t = drawBoard(view.canvas, g, state, { focus: view.cursor, fadeUnreached: false, labels: labelsOf(), ghosts: ghostMode });
+    const open = ghostMode && vars.some((c) => state[c] === UNDECIDED);
     const lit = goal.map((k) => t.litReal.has(k)), lost = goal.map((k) => ghostMode && !t.lit.has(k));
     chips.innerHTML = f.clauses.map((c, j) => `<span class="chip ${lit[j] ? 'on' : lost[j] ? 'dead' : ''}">${j + 1}: ${clauseText(f.names, c)}</span>`).join(' ∧ ');
     [...switches.children].forEach((b, i) => { b.textContent = `${f.names[i]}: ${valText(i)}`; b.dataset.v = valText(i); });
     const n = lit.filter(Boolean).length, assign = f.names.map((v, i) => `${v} = ${valText(i)}`).join(', ');
     const dead = goal.map((k, j) => (t.lit.has(k) ? 0 : j + 1)).filter(Boolean);
     if (ghostMode && dead.length) {
-      readout.innerHTML = `${assign}. <span class="bad">Clause ${dead.join(', ')} can't be lit</span>, whatever the undecided switches do. A solver backs up here.`;
-    } else if (ghostMode && vars.some((c) => state[c] === UNDECIDED)) {
+      readout.innerHTML = `${assign}. <span class="bad">Clause ${dead.join(', ')} can't be lit</span>${open ? ', whatever the undecided switches do' : ''}. A solver backs up here.`;
+    } else if (open) {
       readout.innerHTML = `${assign}. Every target can still get light (solid or dashed), so a solver would keep going.`;
     } else {
       readout.innerHTML = `${assign}. Targets lit: <span class="num">${n}</span> of ${goal.length}.`
