@@ -16,6 +16,7 @@ export function mount(el, opts = {}) {
   const chips = document.createElement('p'); chips.className = 'chips';
   const holder = document.createElement('div');
   const controls = document.createElement('div'); controls.className = 'controls';
+  const switches = document.createElement('div'); switches.className = 'controls switches'; switches.setAttribute('aria-label', 'Switches');
   const readout = document.createElement('p'); readout.className = 'readout'; readout.setAttribute('role', 'status'); readout.setAttribute('aria-live', 'polite');
   if (opts.presets) { // "label=formula;label=formula"
     const row = document.createElement('div'); row.className = 'controls presets';
@@ -24,8 +25,8 @@ export function mount(el, opts = {}) {
       row.append(button(name, () => { input.value = formula; build(); }));
     }
     form.after(row);
-    el.append(form, row, err, chips, holder, controls, readout);
-  } else el.append(form, err, chips, holder, controls, readout);
+    el.append(form, row, err, chips, holder, switches, controls, readout);
+  } else el.append(form, err, chips, holder, switches, controls, readout);
   if (opts.locked === '1') form.style.display = 'none';
   let f, g, vars, goal, state, view;
   const ghostMode = opts.ghost === '1'; // switches start undecided; clicks cycle undecided -> true -> false
@@ -40,6 +41,7 @@ export function mount(el, opts = {}) {
     view = makeCanvas(g, { label: `Board for the formula ${input.value}. Arrow keys move between the switch mirrors; Enter flips one.`, onActivate });
     view.canvas.classList.add('wide-board'); view.canvas.style.maxWidth = `${g.w * 46}px`;
     holder.replaceChildren(view.canvas);
+    switches.replaceChildren(...vars.map((c) => { const b = button('', () => onActivate(c)); b.className = 'switch'; return b; }));
     controls.replaceChildren(button('All true', () => setAll(0)), button('All false', () => setAll(1)));
     if (ghostMode) controls.append(button('All undecided', () => setAll(UNDECIDED)));
     if (opts.solver === '1') controls.append(button('Ask: can it be solved?', ask));
@@ -56,6 +58,7 @@ export function mount(el, opts = {}) {
     const t = drawBoard(view.canvas, g, state, { focus: view.cursor, fadeUnreached: false, labels: labelsOf(), ghosts: ghostMode });
     const lit = goal.map((k) => t.litReal.has(k)), lost = goal.map((k) => ghostMode && !t.lit.has(k));
     chips.innerHTML = f.clauses.map((c, j) => `<span class="chip ${lit[j] ? 'on' : lost[j] ? 'dead' : ''}">${j + 1}: ${clauseText(f.names, c)}</span>`).join(' ∧ ');
+    [...switches.children].forEach((b, i) => { b.textContent = `${f.names[i]}: ${valText(i)}`; b.dataset.v = valText(i); });
     const n = lit.filter(Boolean).length, assign = f.names.map((v, i) => `${v} = ${valText(i)}`).join(', ');
     const dead = goal.map((k, j) => (t.lit.has(k) ? 0 : j + 1)).filter(Boolean);
     if (ghostMode && dead.length) {

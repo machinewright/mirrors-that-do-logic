@@ -98,3 +98,6 @@ svg.chart .label { fill: var(--muted); font-size: 12.5px; } svg.chart .label.str
 table.data { border-collapse: collapse; font-size: 13.5px; margin-top: 8px; font-variant-numeric: tabular-nums; }
 table.data th, table.data td { padding: 3px 10px; text-align: right; border-bottom: 1px solid var(--rule); }
 .chip.dead { background: #fde4e1; border-color: #e3a29a; color: #9c2a20; text-decoration: line-through; }
+.widget .switches button { font-family: ui-monospace, "SF Mono", Menlo, monospace; min-width: 6.5em; }
+.widget .switches button[data-v="true"] { background: #fff6dd; border-color: #e2b85a; }
+.widget .switches button[data-v="undecided"] { border-style: dashed; }

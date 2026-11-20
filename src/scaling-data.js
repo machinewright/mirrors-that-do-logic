@@ -64,6 +64,15 @@ export const SCALING = {
    "tried": 51,
    "min": 1159,
    "max": 6809
+  },
+  {
+   "n": 20,
+   "m": 85,
+   "unsat": 6719,
+   "k": 11,
+   "tried": 36,
+   "min": 3405,
+   "max": 13297
   }
  ]
 };
