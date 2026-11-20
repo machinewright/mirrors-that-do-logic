@@ -130,11 +130,11 @@ the count keeps climbing:</p>
 <p>At 24 variables, trying every setting means 2<sup>24</sup>, about 17 million, and the solver needed a median of
 17,385 positions: a thousand times fewer. But from 6 variables to 24, its count grew from 51 to 17,385, about 1.4
 times for each added variable, and the line on the log scale keeps rising. The rate wobbles from size to size, and these
-sizes are small, so the chart alone can't prove that the growth never stops. The theorem in the next section can.</p>
+sizes are small, so the chart alone can't show that the growth never stops. For slightly denser random formulas, a theorem does.</p>
 
 <h2>Where that leaves the solver</h2>
-<p>The solver from the last essay is good, not magic. On the boards people actually play it settles par before you can
-blink, and ghost light is why. But some boards hide a hard formula in their plumbing. On those, ghost light only slows
+<p>The solver from the last essay is good, not magic. On boards made to be played, it settles par in a fraction of a second,
+and ghost light is why. But some boards hide a hard formula in their plumbing. On those, ghost light only slows
 the doubling. For search that works like this one, deciding switches one at a time and backing up when a clause dies,
 that's not just experience but a theorem. Vašek Chvátal and Endre Szemerédi proved in 1988 that random formulas with
 enough clauses per variable almost never have a short proof of "no solution" of the kind such a search produces, so the
