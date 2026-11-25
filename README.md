@@ -9,8 +9,8 @@ Live: https://machinewright.github.io/mirrors-that-do-logic/ . Plain HTML/JS mod
 
 - `src/compile.js`: CNF -> board (n variables, m clauses -> (4m+2) x (3n+1)). Flipping any non-switch piece only sends
   light off the board or into a wall, so the board can be fully lit iff the formula is satisfiable.
-- `proto/verify.mjs [seed]`: brute force over every orientation of every piece on random small CNFs (2,609 formulas,
-  973 unsatisfiable, no mismatch).
+- `proto/verify.mjs [seed]`: brute force over every orientation of every piece on random small CNFs (seed 1: 2,568
+  formulas with up to three variables, 955 unsatisfiable, no mismatch; about 5 minutes).
 - `proto/scaling-unsat.mjs`: search positions of the essay-1 solver on unsatisfiable random 3-CNFs at 4.26 clauses
   per variable; writes `src/scaling-data.js` for the chart.
 - Widgets: `gadget` (ASCII-map boards, `src/maps.js`), `compiler` (data-formula, data-presets, data-solver, data-unbolt,

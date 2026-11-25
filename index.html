@@ -88,27 +88,29 @@ has no solution, by bending the plumbing?</p>
 edge. A splitter on a line sends its copy up and off the top. The mirrors beside a target send light into a wall or
 off the board. Flipped plumbing only throws light away. It never brings light anywhere new. So the targets can all be
 lit only if the switches alone can light them, and that happens exactly when the formula has a solution.</p>
-<p>I also checked this the slow way: for 2,609 random small formulas (973 of them unsatisfiable), a program tried
+<p>I also checked this the slow way: for 2,568 random small formulas with up to three variables (955 of them unsatisfiable), a program tried
 every orientation of every piece, plumbing included. In every case the board could be fully lit exactly when the
 formula could be satisfied. Try it yourself. Here nothing is bolted:</p>
 
 <div class="widget wide" data-widget="compiler" data-unbolt="1" data-formula="(a ∨ b) ∧ (a ∨ ¬b) ∧ (¬a ∨ b) ∧ (¬a ∨ ¬b)"></div>
 
 <h2>What a fast solver would mean</h2>
-<p>Now the argument. Suppose someone wrote a program that solves every mirror board quickly. "Quickly" has a precise
+<p>Now the argument. Suppose someone wrote a program that solves every mirror board quickly (boards of lamps, mirrors, splitters, walls
+and targets, the pieces the compiler uses; boards with mirrors alone are a different question, which this proof
+doesn't settle). "Quickly" has a precise
 meaning here: its running time grows like a fixed power of the board's size (say the square, or the cube), rather
 than doubling with every few extra mirrors. Then you could also solve every formula quickly. Compile the formula
 (that's fast, and the board is only polynomially larger), run the mirror program, and read the answer off the
 switches.</p>
 <p>Deciding whether such a formula can be satisfied is called <em>3-SAT</em>. In 1971 Stephen Cook proved (and Leonid
-Levin, independently) that satisfiability is <em>NP-complete</em>: every problem whose yes-answers can be
+Levin, independently, published in 1973) that satisfiability is <em>NP-complete</em>: every problem whose yes-answers can be
 <em>checked</em> quickly, given the right hint, can be translated into it, much as we translated formulas into
 mirrors. That class of problems is called NP. A year later Richard Karp showed the same for 3-SAT. So a fast mirror program would make every quickly checkable problem quickly solvable.
 That is the P versus NP question. It has been open for more than fifty years, and the Clay Mathematics Institute has
 offered a million dollars for its answer since 2000. Most researchers believe that no such program exists.</p>
 <p>A proposed solution to a mirror puzzle is easy to check: trace the light, as the game does after every click. So
 the mirror puzzle is in NP too, and "can every target be lit?" is itself NP-complete. Finding the <em>fewest</em>
-flips is at least as hard, since it answers that question along the way. That was the question of the last essay.</p>
+flips is at least as hard, since it answers that question along the way. Proving that a given par is the fewest was the question of the last essay.</p>
 <aside class="aside">What this doesn't say: NP-completeness is about the worst case. The boards in the last essay
 were made to be fun, and the solver proved their par in milliseconds. A board compiled from a hard formula looks
 nothing like a game level. Formulas that come from real problems have structure a solver can exploit, which is why modern
@@ -131,7 +133,7 @@ the count keeps climbing:</p>
 <p>At 24 variables, trying every setting means 2<sup>24</sup>, about 17 million, and the solver needed a median of
 17,385 positions: a thousand times fewer. But from 6 variables to 24, its count grew from 51 to 17,385, about 1.4
 times for each added variable, and the line on the log scale keeps rising. The rate wobbles from size to size, and these
-sizes are small, so the chart alone can't show that the growth never stops. For slightly denser random formulas, a theorem does.</p>
+sizes are small, so the chart alone can't show that the growth never stops. For random formulas with enough clauses per variable (well above 4.26), a theorem does.</p>
 
 <h2>Where that leaves the solver</h2>
 <p>The solver from the last essay is good, not magic. On boards made to be played, it settles par in a fraction of a second,
@@ -141,12 +143,12 @@ that's not just experience but a theorem. Vašek Chvátal and Endre Szemerédi p
 enough clauses per variable almost never have a short proof of "no solution" of the kind such a search produces, so the
 search needs exponentially many steps. Beame, Karp, Pitassi and Saks later worked out how the bound depends on the
 number of clauses per variable. The chart's formulas use about 4.26, close to the ratio (believed to be near 4.27)
-where random formulas switch from almost always satisfiable to almost never. That's where they are hardest in practice. Cleverer methods
+where random formulas switch from almost always satisfiable to almost never. That's where they are, empirically, hardest for typical solvers. Cleverer methods
 exist, but none is known to escape the doubling on every formula. The hardness isn't in the solver. As far as anyone
 knows, it's in the puzzle itself.</p>
 
 <h2>Related work</h2>
-<p>Turning a puzzle into logic gates is the standard way to prove a puzzle hard. Richard Kaye's "Minesweeper is
+<p>Turning a puzzle into logic gates is a standard way to prove a puzzle hard. Richard Kaye's "Minesweeper is
 NP-complete" (2000) built wires and gates out of Minesweeper patterns; laser-and-mirror games have been treated the
 same way, for example in "LaserTank is NP-complete" by Alexandersson and Restadh. Robert Hearn and Erik Demaine's book
 <i>Games, Puzzles, and Computation</i> (2009) collects many such proofs. The construction in this essay is a simple
